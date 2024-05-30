@@ -156,6 +156,7 @@ on exitFrame me
   gTiles[1].tls.add( [#nm:"Chaotic Stone", #sz:point(1,1), #specs:[0], #renderType:"tiles", #color:color(255,0,255)])--, #tags:[]]    )
   gTiles[1].tls.add( [#nm:"Small Pipes", #sz:point(1,1), #specs:[0], #renderType:"pipeType", #color:color(255,255,0)])--, #tags:[]]    )
   gTiles[1].tls.add( [#nm:"Trash", #sz:point(1,1), #specs:[0], #renderType:"pipeType", #color:color(90,255,0)])--, #tags:[]]    )
+  gTiles[1].tls.add( [#nm:"Owoash", #sz:point(1,1), #specs:[0], #renderType:"pipeType", #color:color(90,255,0)])--, #tags:[]]    )
   gTiles[1].tls.add( [#nm:"Invisible", #sz:point(1,1), #specs:[0], #renderType:"invisibleI", #color:color(200,200,200)])--, #tags:[]]    )
   gTiles[1].tls.add( [#nm:"LargeTrash", #sz:point(1,1), #specs:[0], #renderType:"largeTrashType", #color:color(175,30,255)])--, #tags:[]] )
   gTiles[1].tls.add( [#nm:"3DBricks", #sz:point(1,1), #specs:[0], #renderType:"tiles", #color:color(255,150,0)])--, #tags:[]]    )
