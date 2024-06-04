@@ -2142,9 +2142,13 @@ on drawPipeTypeTile(mat, tl, layer)
   case mat of 
     "small Pipes":
       mem = "pipeTiles2"
-    "trash":
+    "Trash":
+      mem = "trashTiles3"
+    "Dense Trash":
       mem = "trashTiles3"
 	"Owoash":
+      mem = "trashTiles3"
+	"Owoash 22":
       mem = "trashTiles3"
 	"Dense Owoash":
       mem = "trashTiles3"
@@ -2170,9 +2174,21 @@ on drawPipeTypeTile(mat, tl, layer)
   end repeat
   
   case mat of 
-    "trash":
+    "Trash":
       if gLEProps.matrix[tl.locH][tl.locV][layer][1] <> 9  or (gDRMatFixes = FALSE) then
         repeat with q = 1 to 3 then
+          d = [1,11,21][layer] + random(9)-1
+          gt = random(48)
+          gt = rect(50*(gt-1), 0, 50*gt, 50)+rect(1,1,1,1)
+          rct = giveMiddleOfTile(tl-gRenderCameraTilePos) - point(11,11)+point(random(21), random(21))
+          rct = rect(rct-point(25,25), rct+point(25,25))
+          member("layer"&string(d)).image.copyPixels(member("assortedTrash").image, rotateToQuad(rct, random(360)), gt, {#color:[color(255,0,0), color(0,255,0), color(0,0,255)][random(3)], #ink:36})
+        end repeat
+      end if  
+	"Dense Trash":
+      if gLEProps.matrix[tl.locH][tl.locV][layer][1] <> 9  or (gDRMatFixes = FALSE) then
+		ltsz = random(8) + 4
+        repeat with q = 1 to ltsz then
           d = [1,11,21][layer] + random(9)-1
           gt = random(48)
           gt = rect(50*(gt-1), 0, 50*gt, 50)+rect(1,1,1,1)
@@ -2186,6 +2202,17 @@ on drawPipeTypeTile(mat, tl, layer)
         repeat with q = 1 to 3 then
           d = [1,11,21][layer] + random(9)-1
           gt = random(23)
+          gt = rect(50*(gt-1), 0, 50*gt, 50)+rect(1,1,1,1)
+          rct = giveMiddleOfTile(tl-gRenderCameraTilePos) - point(11,11)+point(random(21), random(21))
+          rct = rect(rct-point(25,25), rct+point(25,25))
+          member("layer"&string(d)).image.copyPixels(member("assortedOwoash").image, rotateToQuad(rct, random(360)), gt, {#color:[color(255,0,0), color(0,255,0), color(0,0,255)][random(3)], #ink:36})
+        end repeat
+      end if 
+	"Owoash 22":
+      if gLEProps.matrix[tl.locH][tl.locV][layer][1] <> 9  or (gDRMatFixes = FALSE) then
+        repeat with q = 1 to 3 then
+          d = [1,11,21][layer] + random(9)-1
+          gt = 14
           gt = rect(50*(gt-1), 0, 50*gt, 50)+rect(1,1,1,1)
           rct = giveMiddleOfTile(tl-gRenderCameraTilePos) - point(11,11)+point(random(21), random(21))
           rct = rect(rct-point(25,25), rct+point(25,25))
