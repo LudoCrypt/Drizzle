@@ -50,7 +50,7 @@ on exitFrame me
   
   solidMtrx = []
   if (getBoolConfig("Trash and Small pipes non solid")) then
-    nonSolidTileSets = ["Small Pipes", "Trash", "Owoash"]--"Invisible"
+    nonSolidTileSets = ["Small Pipes", "Trash", "Owoash", "Dense Owoash"]--"Invisible"
   else
     nonSolidTileSets = []
   end if
