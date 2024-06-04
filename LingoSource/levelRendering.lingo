@@ -2212,7 +2212,7 @@ on drawPipeTypeTile(mat, tl, layer)
       if gLEProps.matrix[tl.locH][tl.locV][layer][1] <> 9  or (gDRMatFixes = FALSE) then
         repeat with q = 1 to 3 then
           d = [1,11,21][layer] + random(9)-1
-          gt = 14
+          gt = 15
           gt = rect(50*(gt-1), 0, 50*gt, 50)+rect(1,1,1,1)
           rct = giveMiddleOfTile(tl-gRenderCameraTilePos) - point(11,11)+point(random(21), random(21))
           rct = rect(rct-point(25,25), rct+point(25,25))
