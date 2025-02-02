@@ -379,8 +379,8 @@ on initEffect me
     end if
   end repeat
   
-  effectIn3D = false
-  gRotOp = false
+  effectIn3D = FALSE
+  gRotOp = FALSE
   repeat with op in efopts
     case op[1] of 
       "Layers":
@@ -767,7 +767,7 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
   if (cEff <> VOID) then
     effGraf = member("previewImprt")
     if (gLastImported <> cEff.nm) then
-      member("previewImprt").importFileInto("Effects" & the dirSeparator & cEff.nm & ".png")
+      member("previewImprt").importFileInto("Effects\" & cEff.nm & ".png")
       effGraf.name = "previewImprt"
       gLastImported = cEff.nm
     end if
@@ -906,7 +906,7 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
             doingTip = 1
             effGraf = member("previewImprt")
             if gLastImported <> cEff.tipGraf then
-              member("previewImprt").importFileInto("Effects" & the dirSeparator & cEff.tipGraf & ".png")
+              member("previewImprt").importFileInto("Effects\" & cEff.tipGraf & ".png")
               effGraf.name = "previewImprt"
               gLastImported = cEff.tipGraf
             end if
@@ -1053,7 +1053,7 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
               doingTip = 0
               effGraf = member("previewImprt")
               if gLastImported <> cEff.nm then
-                member("previewImprt").importFileInto("Effects" & the dirSeparator & cEff.nm & ".png")
+                member("previewImprt").importFileInto("Effects\" & cEff.nm & ".png")
                 effGraf.name = "previewImprt"
                 gLastImported = cEff.nm
               end if
@@ -1295,9 +1295,9 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
             
             if cEff.findPos("outline") then -- outline, if wanted
               if cEff.outline then
-                repeat with jlist in [[point(-1,-1), color(0,0,255)], [point(-0,-1), color(0,0,255)], [point(-1,-0), color(0,0,255)], [point(1,1), color(255,0,0)],[point(0,1), color(255,0,0)],[point(1,0), color(255,0,0)]] then
-                  oqd = [qd[1] + jlist[1], qd[2] + jlist[1], qd[3] + jlist[1], qd[4] + jlist[1]]
-                  member("layer"&string(d)).image.copyPixels(effGraf, oqd, grab, {#color:jlist[2], #ink:36})
+                repeat with j in [[point(-1,-1), color(0,0,255)], [point(-0,-1), color(0,0,255)], [point(-1,-0), color(0,0,255)], [point(1,1), color(255,0,0)],[point(0,1), color(255,0,0)],[point(1,0), color(255,0,0)]] then
+                  oqd = [qd[1] + j[1], qd[2] + j[1], qd[3] + j[1], qd[4] + j[1]]
+                  member("layer"&string(d)).image.copyPixels(effGraf, oqd, grab, {#color:j[2], #ink:36})
                 end repeat
               end if
             end if
@@ -1388,11 +1388,11 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
         
         fc = affop + (1.0-affop)* (1-((1-solidAfaMv(point(q2,c2), 3)) * requireSolid))
         
-        repeat with dt = 1 to 30
-          lr = 30-dt
+        repeat with d = 1 to 30
+          lr = 30-d
           
           if (lr = 9) or (lr = 19) then
-            lraddc = 1+(dt>9)+(dt>19)
+            lraddc = 1+(d>9)+(d>19)
             sld = (1-((1-solidMtrx[q2][c2][lraddc]) * requireSolid))
             fc = affop + (1.0 - affop) * (1-((1-solidAfaMv(point(q2,c2), lraddc)) * requireSolid))
           end if
@@ -6810,7 +6810,7 @@ on applyDaddyCorruption me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --lingo sometimes returns number for some reason but drizzle doesn't!
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -6910,7 +6910,7 @@ on applyCorruptionNoEye me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -7005,7 +7005,7 @@ on applyWastewaterMold me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255)) then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -7107,7 +7107,7 @@ on applyClubMoss me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -7200,7 +7200,7 @@ on applyMossWall me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -7295,7 +7295,7 @@ on applyFlowers me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -9248,16 +9248,14 @@ on ApplyMosaicPlant me, q, c
     dmin = 9
     dmax = 19
     lr = 1
-    if solidMtrx[q2][c2][1] then
-      return
-    end if
+    if solidMtrx[q2][c2][1] then exit
+    -- important comment, do not remove
   else
     dmin = 19
     dmax = 29
     lr = 2
-    if solidMtrx[q2][c2][2] then
-      return
-    end if
+    if solidMtrx[q2][c2][2] then exit
+    -- important comment, do not remove
   end if
   
   case colrIntensity of
