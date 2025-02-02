@@ -49,6 +49,16 @@ on solidAfaMv(pos: point, layer: number)
   end if
 end
 
+on withinBoundsOfLevel(pos: point)
+  type return: number
+  global solidMtrx
+  if pos.inside(rect(2, 2, solidMtrx.count, solidMtrx[1].count)) then
+    return 1
+  else
+    return 0
+  end if
+end
+
 on depthPnt(pnt, dpt)
   return (pnt - point(700, 800 / 3)) / ((10 + dpt * 0.025) * 0.1) + point(700, 800 / 3)
 end
