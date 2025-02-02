@@ -379,8 +379,8 @@ on initEffect me
     end if
   end repeat
   
-  effectIn3D = false
-  gRotOp = false
+  effectIn3D = FALSE
+  gRotOp = FALSE
   repeat with op in efopts
     case op[1] of 
       "Layers":
@@ -767,7 +767,7 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
   if (cEff <> VOID) then
     effGraf = member("previewImprt")
     if (gLastImported <> cEff.nm) then
-      member("previewImprt").importFileInto("Effects" & the dirSeparator & cEff.nm & ".png")
+      member("previewImprt").importFileInto("Effects\" & cEff.nm & ".png")
       effGraf.name = "previewImprt"
       gLastImported = cEff.nm
     end if
@@ -906,7 +906,7 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
             doingTip = 1
             effGraf = member("previewImprt")
             if gLastImported <> cEff.tipGraf then
-              member("previewImprt").importFileInto("Effects" & the dirSeparator & cEff.tipGraf & ".png")
+              member("previewImprt").importFileInto("Effects\" & cEff.tipGraf & ".png")
               effGraf.name = "previewImprt"
               gLastImported = cEff.tipGraf
             end if
@@ -1017,7 +1017,7 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
               doingTip = 0
               effGraf = member("previewImprt")
               if gLastImported <> cEff.nm then
-                member("previewImprt").importFileInto("Effects" & the dirSeparator & cEff.nm & ".png")
+                member("previewImprt").importFileInto("Effects\" & cEff.nm & ".png")
                 effGraf.name = "previewImprt"
                 gLastImported = cEff.nm
               end if
@@ -1220,9 +1220,9 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
             
             if cEff.findPos("outline") then -- outline, if wanted
               if cEff.outline then
-                repeat with jlist in [[point(-1,-1), color(0,0,255)], [point(-0,-1), color(0,0,255)], [point(-1,-0), color(0,0,255)], [point(1,1), color(255,0,0)],[point(0,1), color(255,0,0)],[point(1,0), color(255,0,0)]] then
-                  oqd = [qd[1] + jlist[1], qd[2] + jlist[1], qd[3] + jlist[1], qd[4] + jlist[1]]
-                  member("layer"&string(d)).image.copyPixels(effGraf, oqd, grab, {#color:jlist[2], #ink:36})
+                repeat with j in [[point(-1,-1), color(0,0,255)], [point(-0,-1), color(0,0,255)], [point(-1,-0), color(0,0,255)], [point(1,1), color(255,0,0)],[point(0,1), color(255,0,0)],[point(1,0), color(255,0,0)]] then
+                  oqd = [qd[1] + j[1], qd[2] + j[1], qd[3] + j[1], qd[4] + j[1]]
+                  member("layer"&string(d)).image.copyPixels(effGraf, oqd, grab, {#color:j[2], #ink:36})
                 end repeat
               end if
             end if
@@ -1313,11 +1313,11 @@ on ApplyCustomEffect(me, q, c, effectr, efname)
         
         fc = affop + (1.0-affop)* (1-((1-solidAfaMv(point(q2,c2), 3)) * requireSolid))
         
-        repeat with dt = 1 to 30
-          lr = 30-dt
+        repeat with d = 1 to 30
+          lr = 30-d
           
           if (lr = 9) or (lr = 19) then
-            lraddc = 1+(dt>9)+(dt>19)
+            lraddc = 1+(d>9)+(d>19)
             sld = (1-((1-solidMtrx[q2][c2][lraddc]) * requireSolid))
             fc = affop + (1.0 - affop) * (1-((1-solidAfaMv(point(q2,c2), lraddc)) * requireSolid))
           end if
@@ -5700,7 +5700,7 @@ on applyMushroomStubs me, q, c, amount
             else
               member("layer"&string(dp+d)).image.copyPixels(member("mushroomStubsGraf").image, rect(startPos, startPos)+(rect(-rad,-rad,rad,rad) * rect(radw, 1, radw, 1)), rect(20, 1+d*40, 60, 1+(d+1)*40), {#color:colr, #ink:36})
               if gdLayer <> "C" then
-                member("gradient"&gdLayer&string(dp+d)).image.copyPixels(member("mushroomStubsGrad").image, rect(startPos, startPos)+(rect(-rad,-rad,rad,rad) * rect(radw, 1, radw, 1)), rect(20, 1+d*40, 60, 1+(d+1)*40), {#ink:39})
+                member("gradient"&gdLayer&string(dp+d)).image.copyPixels(member("mushroomStubsGrad").image, rect(startPos, startPos)+(rect(-rad,-rad,rad,rad) * rect(radw, 1, radw, 1)), rect(20 1+d*40, 60, 1+(d+1)*40), {#ink:39})
               end if 
             end if
           else
@@ -6256,7 +6256,7 @@ on applyDaddyCorruption me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --lingo sometimes returns number for some reason but drizzle doesn't!
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -6356,7 +6356,7 @@ on applyCorruptionNoEye me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -6451,7 +6451,7 @@ on applyWastewaterMold me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255)) then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1) then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -6480,7 +6480,6 @@ on applyWastewaterMold me, q, c, amount
     end if
   end repeat
 end
-
 --dakras
 on applyClubMoss me, q, c, amount
   q2 = q + gRenderCameraTilePos.locH
@@ -6553,7 +6552,7 @@ on applyClubMoss me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -6646,7 +6645,7 @@ on applyMossWall me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -6741,7 +6740,7 @@ on applyFlowers me, q, c, amount
     
     if(solid = 0)and(dp < 27)and(rad > 1.2)then
       repeat with dr in [point(0,0), point(-1,0), point(0,-1), point(0,1), point(1,0)]then
-        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> color(255,255,255))then --do not -1
+        if( member("layer"&string(dp+2)).getPixel(startPos.locH + dr.locH*rad*0.5, startPos.locV + dr.locV*rad*0.5) <> -1)then --compare it to -1 here, not to white
           rad = rad / 2
           solid = 1
           exit repeat
@@ -8665,16 +8664,14 @@ on ApplyMosaicPlant me, q, c
     dmin = 9
     dmax = 19
     lr = 1
-    if solidMtrx[q2][c2][1] then
-      return
-    end if
+    if solidMtrx[q2][c2][1] then exit 
+    -- important comment, do not remove
   else
     dmin = 19
     dmax = 29
     lr = 2
-    if solidMtrx[q2][c2][2] then
-      return
-    end if
+    if solidMtrx[q2][c2][2] then exit 
+    -- important comment, do not remove
   end if
   
   case colrIntensity of
@@ -9009,7 +9006,7 @@ on ApplyFingers me, q, c
   q2 = q + gRenderCameraTilePos.locH
   c2 = c + gRenderCameraTilePos.locV
   
-  case lrSup of
+  case lrSup of--["All", "1", "2", "3", "1:st and 2:nd", "2:nd and 3:rd"]
     "All":
       lsL = [1,2,3]
     "1":
@@ -9100,6 +9097,8 @@ on ApplyFingers me, q, c
       wdth = sz
       hght = sz * 1.5
       tipGrad = (random(20) + 40) / 100.0
+      --offst = point(sin(ang * PI / 180) * wdth / 2, cos(ang * PI / 180) * hght / 2)
+      --pnt = pnt + offst
       lastRing = FALSE
       repeat with seg = 1 to len then
         qd = rotateToQuadFix(rect(point(-wdth/2, -hght/2), point(wdth/2, hght/2)) + rect(pnt, pnt), ang)
